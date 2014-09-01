@@ -33,11 +33,20 @@ var EzexpressGenerator = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.dest.mkdir('app');
-      this.dest.mkdir('app/templates');
+      this.dest.mkdir('public');
+      this.dest.mkdir('public/js');
+      this.dest.mkdir('public/sass');
 
       this.src.copy('_package.json', 'package.json');
       this.src.copy('_bower.json', 'bower.json');
+      this.src.copy('Gruntfile.js', 'Gruntfile.js');
+      this.src.copy('heroku.js', 'heroku.js');
+      this.src.copy('web.js', 'web.js');
+      this.src.copy('Procfile', 'Procfile');
+      this.src.copy('.gitignore', '.gitignore');
+      this.src.copy('index.html', 'public/index.html');
+      this.src.copy('sass/style.scss', 'public/sass/style.scss');
+      this.src.copy('js/main.js', 'public/js/main.js');
     },
 
     projectfiles: function () {

@@ -1,3 +1,4 @@
+// "use strict";
 var path = require('path');
 /*global module:false*/
 module.exports = function(grunt) {
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= project.js =%>'
+        '<%= project.js %>'
       ]
     },
     watch: {
