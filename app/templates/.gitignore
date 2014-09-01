@@ -1,0 +1,10 @@
+node_modules
+# https://git-scm.com/docs/gitignore
+.sass-cache
+bower_components
+# https://help.github.com/articles/ignoring-files
+*.bmml
+# Example .gitignore files: https://github.com/github/gitignore
+
+public/bower_components
+public/styles

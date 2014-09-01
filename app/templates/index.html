@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Minesweeper</title>
+    <!-- build:css css/minesweeper.css -->
+    <link rel="stylesheet" href="styles/minesweeper.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+  <div id="timer"></div>
+  <header>MineSweeper: </header>
+  <div id="hero">
+    <p>Start New Game:
+      <button id='easy'>Easy(9x9 10 bombs)</button>
+      <button id='medium'>Medium(16x16 40 bombs)</button>
+      <button id='hard'>Hard(16x30 99 mines)</button>
+    </p>
+    <p class="hero left">Left Click: No Bomb</p>
+    <p class="hero middle">Middle Click: Mark Bomb</p>
+    <p class="hero right">Right Click: Not Sure</p>
+  </div>
+  <div id="minesweeper">
+  </div>
+<footer></footer>
+<!-- build:js js/minesweeper.min.js -->
+<script src="js/minesweeper.js"></script>
+<!-- endbuild -->
+</body>
+</html>

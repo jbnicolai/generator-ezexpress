@@ -1,0 +1,43 @@
+{
+  "name": "generator-ezexpress",
+  "version": "0.0.0",
+  "description": "An express web project generator for Yeoman",
+    "keywords": [
+    "yeoman-generator",
+    "express",
+    "web",
+    "html",
+    "generator"
+  ],
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "mcates/generator-ezexpress",
+  "author": {
+    "name": "Michael Cates",
+    "email": "mcat321@gmail.com",
+    "url": "https://github.com/mcates"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.17.0",
+    "chalk": "^0.5.0",
+    "yosay": "^0.3.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  }
+}
