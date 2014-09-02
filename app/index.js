@@ -20,7 +20,7 @@ var EzexpressGenerator = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'confirm',
       name: 'someOption',
-      message: 'Would you like to enable this option?',
+      message: 'Would you like to enable SASS preprocessor? (Cannot disable currently)',
       default: true
     }];
 
