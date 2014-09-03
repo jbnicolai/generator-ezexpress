@@ -1,0 +1,8 @@
+@import 'init';
+
+body
+{
+  @include BodyCopy;
+  margin: 0;
+  padding: 0;
+}

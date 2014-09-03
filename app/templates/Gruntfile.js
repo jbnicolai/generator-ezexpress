@@ -1,40 +1,49 @@
 'use strict';
 var path = require('path');
-/*global module:false*/
+
+// # Folder Paths
+// to match only one level down:
+// 'test/spec/{,*/}*.js'
+// to recursively match all subfolders:
+// 'test/spec/**/*.js'
+
 module.exports = function(grunt) {
 
   var yeomanConfig = {
     app: '<%= paths.dev %>',
-    dist: '<%= paths.dist %>',
-    siteUrl: '<%= userOpts.siteURL %>',
-    devURL: '<%= userOpts.devURL %>',
-    devPort: '<%= userOpts.devPort %>'
+    dist: '<%= paths.dist %>'
   };
   // Project configuration.
   grunt.initConfig({
+
+
+    yeoman: yeomanConfig,
+
+
     // Task configuration.
-    //Todo: Add usemin
     pkg: grunt.file.readJSON('package.json'),
     project: {
-      build: 'build',
-      src: 'public',
-      assets: '<%= project.src %>/assets',
-      sass: '<%= project.src %>/sass/*.scss',
-      js: '<%= project.src %>/js/*.js'
+      app: '<%%= yeoman.app %>',
+      build: '<%%= yeoman.dist %>',
+      assets: '<%%= yeoman.app %>/assets',
+      sass: '<%%= yeoman.app %>/sass/*.scss',
+      js: '<%%= yeoman.app %>/js/*.js'
     },
+
+
     useminPrepare: {
       options: {
-        dest: '<%= project.build %>'
+        dest: '<%%= yeoman.dist %>'
       },
-      html: ['<%= project.src %>/**/*.html']
+      html: ['<%%= yeoman.app %>/**/*.html']
     },
     usemin: {
       options: {
-        basedir: '<%= project.build %>',
-        dirs: ['<%= project.build %>']
+        basedir: '<%%= yeoman.dist %>',
+        dirs: ['<%%= yeoman.dist %>']
       },
-      html: ['<%= project.build %>/**/*.html'],
-      css: ['<%= project.build %>/**/*.css']
+      html: ['<%%= yeoman.dist %>/**/*.html'],
+      css: ['<%%= yeoman.dist %>/**/*.css']
     },
     jshint: {
       options: {
@@ -42,7 +51,7 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= project.js %>'
+        '<%%= project.js %>'
       ]
     },
     watch: {
@@ -53,14 +62,14 @@ module.exports = function(grunt) {
         files: 'Gruntfile.js',
       },
       html: {
-        files: ['<%= project.src %>/*.html', '<% project.src %>/partials/*.html']
+        files: ['<%%= yeoman.app %>/*.html', '<%= yeoman.app %>/partials/*.html']
       },
       sass: {
-        files: '<%= project.sass %>',
+        files: '<%%= project.sass %>',
         tasks: ['sass:dev', 'autoprefixer:dev']
       },
       js: {
-        files: '<%= project.js %>',
+        files: '<%%= project.js %>',
         tasks: ['jshint:all']
       },
       backend: {
@@ -72,60 +81,60 @@ module.exports = function(grunt) {
       dynamic: {
         files: [{
           expand: true,
-          cwd: '<%= project.src %>/assets/',
+          cwd: '<%%= yeoman.app %>/assets/',
           src: ['**/*.{png,jpg,gif}'],
           extDot: 'last',
-          dest: '<%= project.src %>/assets/'
+          dest: '<%%= yeoman.app %>/assets/'
         }]
       }
     },
     copy: {
       build: {
-        cwd: '<%= project.src %>',
+        cwd: '<%%= yeoman.app %>',
         src: ['**/*.html', '!**/sass/**'],
-        dest: '<%= project.build %>',
+        dest: '<%%= yeoman.dist %>',
         expand: true
       },
     },
     clean: {
       build: {
-        src: ['<%= project.build %>']
+        src: ['<%%= yeoman.dist %>']
       },
     },
     autoprefixer: {
       dev: {
         expand: true,
-        cwd: '<%= project.src %>',
+        cwd: '<%%= yeoman.app %>',
         src: ['styles/*.css'],
         extDot: 'last',
-        dest: '<%= project.src %>'
+        dest: '<%%= yeoman.app %>'
       },
       build: {
         expand: true,
-        cwd: '<%= project.build %>',
+        cwd: '<%%= yeoman.dist %>',
         src: ['styles/*.css'],
         extDot: 'last',
-        dest: '<%= project.build %>'
+        dest: '<%%= yeoman.dist %>'
       }
     },
     sass: {
       dev: {
         files: [{
           expand: true,
-          cwd: '<%= project.src %>/sass',
+          cwd: '<%%= yeoman.app %>/sass',
           src: ['*.scss'],
           extDot: 'last',
-          dest: '<%= project.src %>/styles',
+          dest: '<%%= yeoman.app %>/styles',
           ext: '.css'
         }]
       },
       build: {
         files: [{
           expand: true,
-          cwd: '<%= project.build %>/sass',
+          cwd: '<%%= yeoman.dist %>/sass',
           src: ['*.scss'],
           extDot: 'last',
-          dest: '<%= project.build %>/styles',
+          dest: '<%%= yeoman.dist %>/styles',
           ext: '.css'
         }]
       }
@@ -135,7 +144,7 @@ module.exports = function(grunt) {
         options: {
           hostname:"0.0.0.0", //important
           livereload: true,
-          bases: path.resolve('<%= project.src %>'),
+          bases: path.resolve('<%%= yeoman.app %>'),
           server: path.resolve('./web.js'),
           debug: true,
           port: 3000
@@ -144,7 +153,7 @@ module.exports = function(grunt) {
     },
     open: {
       dev: {
-        path: 'http://localhost:<%= express.dev.options.port%>'
+        path: 'http://localhost:<%%= express.dev.options.port%>'
       }
     }
   });
