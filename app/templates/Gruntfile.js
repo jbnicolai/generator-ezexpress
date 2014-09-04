@@ -26,7 +26,9 @@ module.exports = function(grunt) {
       app: '<%%= yeoman.app %>',
       build: '<%%= yeoman.dist %>',
       assets: '<%%= yeoman.app %>/assets',
+      <% if (userOpts.useSass === true) { %>
       sass: '<%%= yeoman.app %>/sass/*.scss',
+      <% } %>
       js: '<%%= yeoman.app %>/js/*.js'
     },
 
@@ -64,10 +66,11 @@ module.exports = function(grunt) {
       html: {
         files: ['<%%= yeoman.app %>/*.html', '<%= yeoman.app %>/partials/*.html']
       },
+      <% if(userOpts.useSass === true) { %>
       sass: {
         files: '<%%= project.sass %>',
         tasks: ['sass:dev', 'autoprefixer:dev']
-      },
+      }, <% } %>
       js: {
         files: '<%%= project.js %>',
         tasks: ['jshint:all']
@@ -117,6 +120,7 @@ module.exports = function(grunt) {
         dest: '<%%= yeoman.dist %>'
       }
     },
+    <% if (userOpts.useSass === true) { %>
     sass: {
       dev: {
         files: [{
@@ -138,11 +142,12 @@ module.exports = function(grunt) {
           ext: '.css'
         }]
       }
-    },
+  },
+  <% } %>
     express: {
       dev: {
         options: {
-          hostname:"0.0.0.0", //important
+          hostname: "0.0.0.0", //important
           livereload: true,
           bases: path.resolve('<%%= yeoman.app %>'),
           server: path.resolve('./web.js'),
@@ -150,7 +155,7 @@ module.exports = function(grunt) {
           port: 3000
         }
       }
-    },
+  },
     open: {
       dev: {
         path: 'http://localhost:<%%= express.dev.options.port%>'
@@ -163,11 +168,22 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', []);
-  grunt.registerTask('build', ['clean', 'useminPrepare', 'sass:dev', 'autoprefixer:dev',
+  grunt.registerTask('build', [
+    'clean',
+    'useminPrepare',
+    <% if (userOpts.useSass === true) { %>
+    'sass:dev', <% } %>
+    'autoprefixer:dev',
     'copy',
     'concat',
     'cssmin',
-    'uglify', 'usemin']);
+    'uglify',
+    'usemin'
+  ]);
   grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
-  grunt.registerTask('dev', ['sass:dev', 'autoprefixer:dev']);
+  grunt.registerTask('dev', [
+    <% if (userOpts.useSass === true) { %>
+    'sass:dev', <% } %>
+    'autoprefixer:dev'
+  ]);
 };

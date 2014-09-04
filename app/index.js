@@ -52,7 +52,7 @@ EzexpressGenerator.prototype.askFor = function askFor() {
 
   this.prompt(prompts, function(props) {
     this.userOpts = {};
-    this.userOpts.useSass = props.useSass;
+    this.userOpts.useSass = props.useSass; // do some things with this setting
     this.userOpts.appDir = props.appDir;
     this.userOpts.distDir = props.distDir;
 
@@ -66,31 +66,34 @@ EzexpressGenerator.prototype.askFor = function askFor() {
 EzexpressGenerator.prototype.app = function app() {
   this.dest.mkdir(this.paths.dev);
   this.dest.mkdir(this.paths.dev + '/js');
-  this.dest.mkdir(this.paths.dev + '/sass');
+  if (this.userOpts.useSass === true) {
+    this.dest.mkdir(this.paths.dev + '/sass');
+  } else {
+    this.dest.mkdir(this.paths.dev + '/styles');
+  }
 
 
-  this.src.copy('_package.json', 'package.json');
+  this.template('.gitignore', '.gitignore');
+  this.template('_package.json', 'package.json');
+  this.template('heroku.js', 'heroku.js');
+  this.template('web.js', 'web.js');
+
   this.src.copy('_bower.json', 'bower.json');
-  this.src.copy('heroku.js', 'heroku.js');
-  this.src.copy('web.js', 'web.js');
   this.src.copy('Procfile', 'Procfile');
-  this.src.copy('.gitignore', '.gitignore');
-  this.src.copy('index.html', this.userOpts.appDir + '/index.html');
-  this.src.copy('sass/_init.scss', this.userOpts.appDir + '/sass/_init.scss');
-  this.src.copy('sass/style.scss', this.userOpts.appDir + '/sass/style.scss');
-  this.src.copy('js/main.js', this.userOpts.appDir + '/js/main.js');
+
+
+  this.src.copy('index.html', this.paths.dev + '/index.html');
+  if (this.userOpts.useSass === true) {
+    this.src.copy('sass/_init.scss', this.paths.dev + '/sass/_init.scss');
+    this.src.copy('sass/style.scss', this.paths.dev + '/sass/style.scss');
+  } else {
+    this.src.copy('styles/style.css', this.paths.dev + '/styles/style.css');
+  }
+  this.src.copy('js/main.js', this.paths.dev + '/js/main.js');
 };
 
 EzexpressGenerator.prototype.gruntfile = function gruntfile() {
-  var context = {
-    paths: {
-      dev: this.paths.dev,
-      dist: this.paths.dist
-    }
-  };
   this.template('Gruntfile.js', 'Gruntfile.js');
-  // Can't get template function to work without throwing an error
-  // this.src.copy('Gruntfile.js', 'Gruntfile.js');
 };
 
 
